@@ -1,12 +1,27 @@
-import { FaShoppingBasket } from "react-icons/fa";
+import { GrShop } from "react-icons/gr";
+import { SlInfo } from "react-icons/sl";
+
+
 import {useDispatch} from "react-redux";
 import {addProductToBasket} from "../app/features/ProductsSlice"
-export default function Product({product}) {
+import {useNavigate} from "react-router-dom";
+import {Fa9} from "react-icons/fa6";
+export default function Product({product, setShowMessage,showMessage}) {
+
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
+
+    const productInfo = () => {
+        navigate(`/product/${product.id}`);
+    }
     const addToBasket = (product) => {
-        console.log(product)
         dispatch(addProductToBasket(product));
+        product.product_name.startsWith("Kişi") ? localStorage.setItem("man",+localStorage.getItem("man") + 1) : localStorage.setItem("woman",+localStorage.getItem("woman") + 1);
+        setShowMessage({
+            id : product.id,
+            name : product.product_name,
+        });
     }
 
     return (
@@ -21,7 +36,13 @@ export default function Product({product}) {
             <div className="product-price">
                 {product.product_price} AZN
             </div>
-            <FaShoppingBasket onClick={() => addToBasket(product)} className="basket"/>
+            <div className="action-product">
+                <GrShop onClick={() => addToBasket(product)}/>
+                <SlInfo onClick={productInfo}/>
+            </div>
+            {showMessage.id === product.id && <div className="message2">
+                {showMessage.name} was added to basket!
+            </div>}
         </div>
     )
 }

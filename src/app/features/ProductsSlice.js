@@ -16,19 +16,26 @@ export const fetchMyBag = createAsyncThunk(
     }
 )
 
+export const fetchMyBagSearch = createAsyncThunk(
+    "fetchMyBagSearch",
+    async (value) => {
+        let res = fetch(`http://localhost:5000/search-goods/${value}`);
+        return (await res).json();
+    }
+)
+
 const initialState = {
     products: [],
     myBag : [],
     sorted: false,
+    bagSorted : false,
 }
 
 const ProductsSlice = createSlice(
     {
         name: "ProductsSlice",
         reducers: {
-
             addProductToBasket: (state, action) => {
-                console.log("Hello")
                 fetch("http://localhost:5000/add-mybag", {
                     method: "POST",
                     headers: {
@@ -51,19 +58,71 @@ const ProductsSlice = createSlice(
                 state.sorted ? newProducts.sort((a, b) => a.product_price - b.product_price) : newProducts.sort((a, b) => b.product_price - a.product_price);
                 state.sorted = !state.sorted;
                 state.products = newProducts;
-            }
+            },
+            sortBag : (state) => {
+                let newProducts = [...state.myBag];
+                state.bagSorted ? newProducts.sort((a, b) => a.product_price - b.product_price) : newProducts.sort((a, b) => b.product_price - a.product_price);
+                state.bagSorted = !state.bagSorted;
+                state.myBag = newProducts;
+            },
+            submitOrder: (state,action) => {
+                fetch(`http://localhost:5000/add-orders`, {
+                    method: "POST",
+                    headers : {
+                        "Content-type" : "application/json"
+                    },
+                    body : JSON.stringify(action.payload)
+                })
+                    .then(res => res.text())
+                    .then(data => console.log(data));
+            },
         },
         initialState,
         extraReducers: (builder) => {
             builder.addCase(fetchProducts.fulfilled, (state, action) => {
-                state.products = [...action.payload];
+                let prods = [...action.payload];
+                if (localStorage.getItem("man") > localStorage.getItem("woman")) {
+                    prods.sort((a,b) => {
+                        if(a.product_name.startsWith("Kişi")){
+                            return -1;
+                        }
+                        else if(b.product_name.startsWith("Qadın")) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    console.log("kisi");
+                    console.log(prods);
+                    state.products = [...prods];
+                }
+                else if (localStorage.getItem("man") < localStorage.getItem("woman")){
+                    prods.sort((a,b) => {
+                        if(a.product_name.startsWith("Qadın")){
+                            return -1;
+                        }
+                        else if(b.product_name.startsWith("Kişi")) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    console.log("qadin");
+                    console.log(prods);
+                    state.products = [...prods];
+                }
+                else {
+                    console.log("hello");
+                    state.products = [...action.payload];
+                }
             })
             builder.addCase(fetchMyBag.fulfilled,(state,action) => {
+                state.myBag = action.payload;
+            })
+            builder.addCase(fetchMyBagSearch.fulfilled,(state,action) => {
                 state.myBag = action.payload;
             })
         }
     }
 )
 
-export const {sortProducts, addProductToBasket, deleteProductFromBasket} = ProductsSlice.actions
+export const {searchMyBag,sortBag,submitOrder,sortProducts, addProductToBasket, deleteProductFromBasket} = ProductsSlice.actions
 export default ProductsSlice.reducer;

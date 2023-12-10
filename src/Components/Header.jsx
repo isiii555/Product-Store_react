@@ -9,6 +9,7 @@ export default function Header() {
                 <div className="actions">
                     <NavLink to="/admin">Admin</NavLink>
                     <NavLink to="/basket">Basket</NavLink>
+                    <NavLink to="/orders">My Orders</NavLink>
                 </div>
             </div>
             <Outlet/>
