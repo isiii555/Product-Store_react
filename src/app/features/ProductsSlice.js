@@ -76,6 +76,13 @@ const ProductsSlice = createSlice(
                     .then(res => res.text())
                     .then(data => console.log(data));
             },
+            removeProductAdmin : (state,action) => {
+                fetch(`http://localhost:5000/delete-admin/${action.payload}`,{
+                    method: "DELETE"
+                })
+                .then(res => res.text())
+                .then(data => console.log(data));
+            }
         },
         initialState,
         extraReducers: (builder) => {
@@ -124,5 +131,5 @@ const ProductsSlice = createSlice(
     }
 )
 
-export const {searchMyBag,sortBag,submitOrder,sortProducts, addProductToBasket, deleteProductFromBasket} = ProductsSlice.actions
+export const {removeProductAdmin,searchMyBag,sortBag,submitOrder,sortProducts, addProductToBasket, deleteProductFromBasket} = ProductsSlice.actions
 export default ProductsSlice.reducer;

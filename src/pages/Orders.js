@@ -36,7 +36,7 @@ export default function Orders() {
                         <td>{order.ordererAdress}</td>
                         <td>{order.ordererPhone}</td>
                         <td>{amount} AZN</td>
-                        <td className="order-details" onClick={() => setOrderIndex(index)}><FaEye/></td>
+                        <td className="order-details" onClick={() => orderIndex === false ? setOrderIndex(index) : setOrderIndex(false)}><FaEye/></td>
                         {index === orderIndex && <div>
                             {order.orders.map(prod => {
                                 return <p>{prod.product_name}</p>

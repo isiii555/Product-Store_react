@@ -9,6 +9,8 @@ import Basket from "./pages/Basket";
 import {Route, Routes} from "react-router-dom";
 import ProductPage from "./pages/ProductPage";
 import Orders from "./pages/Orders";
+import AddProduct from './pages/AddProduct';
+import AdminProducts from './pages/AdminProducts';
 
 function App() {
     const dispatch = useDispatch();
@@ -22,10 +24,13 @@ function App() {
         <>
             <Routes>
                 <Route path="/" element={<Header/>}>
-                    <Route index={true} path="/" element={<Content/>}/>
-                    <Route path="admin" element={<Admin/>}/>
+                    <Route index={true} element={<Content/>}/>
+                    <Route path="admin" element={<Admin/>}>
+                        <Route index = {true} element={<AdminProducts/>}/>
+                        <Route path="orders" element={<Orders/>}/>
+                        <Route path="add-product" element={<AddProduct/>}/>
+                    </Route>
                     <Route path="basket" element={<Basket/>}/>
-                    <Route path="orders" element={<Orders/>}/>
                     <Route path="product/:id" element={<ProductPage/>}/>
                 </Route>
             </Routes>
