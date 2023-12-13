@@ -1,6 +1,4 @@
 import { Outlet,NavLink } from "react-router-dom";
-import Products from "../Components/Products";
-import SubmitForm from "../Components/SubmitForm";
 
 export default function Basket() {
     return (

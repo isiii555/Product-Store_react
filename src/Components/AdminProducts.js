@@ -2,7 +2,7 @@ import { useDispatch,useSelector} from "react-redux";
 import { fetchProducts, sortProducts } from "../app/features/ProductsSlice";
 import { useState,useEffect } from "react";
 import { FaSort } from "react-icons/fa";
-import  AdminProduct  from "../Components/AdminProduct";
+import  AdminProduct  from "./AdminProduct";
 
 export default function AdminProducts() {
     const dispatch = useDispatch()

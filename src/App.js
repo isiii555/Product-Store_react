@@ -9,8 +9,8 @@ import Basket from "./pages/Basket";
 import {Route, Routes} from "react-router-dom";
 import ProductPage from "./pages/ProductPage";
 import Orders from "./pages/Orders";
-import AddProduct from './pages/AddProduct';
-import AdminProducts from './pages/AdminProducts';
+import AddProduct from './Components/AddProduct';
+import AdminProducts from './Components/AdminProducts';
 
 function App() {
     const dispatch = useDispatch();

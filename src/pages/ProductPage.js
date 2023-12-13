@@ -31,7 +31,7 @@ export default function ProductPage() {
     return (
         <>
             {product && <div className="product-page">
-                <img className="product-page-image" src={product.product_img}/>
+                <img className="product-page-image" alt="productimage" src={product.product_img}/>
                 <div className="product-page-info">
                     <div className="product-name">
                         {product.product_name}

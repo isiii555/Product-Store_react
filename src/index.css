@@ -11,6 +11,10 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+html,body {
+    height: 100%;
+}
+
 body {
     margin: 0;
     background-color: rgba(0, 0, 0, 0.02);
@@ -26,18 +30,17 @@ code {
 
 #root {
     display: flex;
-    justify-content: center;
     align-items: center;
+    height: 100%;
     flex-direction: column;
 }
 
 .header {
-    padding : 0 10px;
+    padding : 20px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 85%;
-    height: 76px;
     background-color: #CCCCCC;
 }
 
@@ -225,7 +228,6 @@ a {
 
 .submit-form {
     flex: 1;
-    height: 556px;
     background: #F7F6F6;
     border-radius: 20px;
 }
@@ -347,6 +349,7 @@ a {
     font-weight: 400;
     line-height: 20px;
     margin: auto;
+    margin-bottom: 148px;
     width: 290px;
     background-color: transparent;
     border-radius: 20px;
@@ -504,25 +507,44 @@ table th, td {
 }
 
 .admin-container {
+    background-color: white;
     display: flex;
     justify-content: flex-end;
     width: 85%;
+    height: 100%;
+    user-select: none;
+}
+
+.admin-container:has(> .content-container) {
+    height: max-content;
+}
+
+.admin-container .content-container{
+    border-right: 1px solid rgba(0,0,0,0.2);
+    padding-right: 10px ;
+    overflow: hidden;
+    height: max-content;
+}
+.admin-container .content-container .sort-button{
+    right: 10px;
 }
 
 .admin-container .admin-navbar{
-    border-left: 1px solid rgba(0,0,0,0.2);
-    height: 90vh;
     width: 180px;
     display: flex;
     gap: 10px;
+    padding-top: 20%;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
-.admin-container table {
+.admin-container .orders-container {
     flex :1;
-    height: max-content;
+    border-right: 1px solid rgba(0,0,0,0.2);
+    height: 100%;
+}
+.admin-container .orders-container table {
+    width: 100%;
 }
 
 .admin-container a{
@@ -533,6 +555,42 @@ table th, td {
     color: white;
 }
 
-.admin-container {
-    user-select: none;
+.add-product-container {
+    flex : 1;
+    border-right: 1px solid rgba(0,0,0,0.2);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-product-container form {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    width: 400px;
+    flex-direction: column;
+    gap : 14px;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-product-container input,button {
+    font-size: 22px;
+    padding: 10px;
+    border: 1px solid #888888;
+    border-radius: 4px;
+}
+
+.add-product-container + .admin-navbar {
+    padding-top: 0;
+    justify-content: center;
+}
+
+.add-product-container button {
+    background-color: steelblue;
+    color: white;
 }
