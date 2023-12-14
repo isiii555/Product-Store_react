@@ -521,8 +521,8 @@ table th, td {
 
 .admin-container .content-container{
     border-right: 1px solid rgba(0,0,0,0.2);
+    flex:1;
     padding-right: 10px ;
-    overflow: hidden;
     height: max-content;
 }
 .admin-container .content-container .sort-button{
@@ -593,4 +593,5 @@ table th, td {
 .add-product-container button {
     background-color: steelblue;
     color: white;
+    cursor : pointer;
 }

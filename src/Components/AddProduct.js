@@ -1,6 +1,10 @@
 import {useRef, useState} from "react";
+import { fetchProducts } from "../app/features/ProductsSlice";
+import { useDispatch } from "react-redux";
 
 export default function AddProduct() {
+    const dispatch = useDispatch();
+
     const [prodName,setProdName] = useState("");
     const [prodDescription,setProdDescription] = useState("");
     const [prodPrice,setProdPrice] = useState("");
@@ -14,7 +18,7 @@ export default function AddProduct() {
         let obj = {
             product_name : prodName,
             product_description : prodDescription,
-            product_image : `${prodImageUrl}`,
+            product_img : `${prodImageUrl}`,
             product_price : prodPrice
         }
         fetch("http://localhost:5000/add-admin",{
@@ -27,7 +31,8 @@ export default function AddProduct() {
         .then(res => res.text())
         .then(data => console.log(data))
         .then(() => setMessage(prodName))
-        .then(() => formRef.current.reset());
+        .then(() => formRef.current.reset())
+        .then(() => dispatch(fetchProducts()));
     }
 
     return(
@@ -35,8 +40,8 @@ export default function AddProduct() {
             <form ref={formRef}>
                 <input onChange={e => setProdName(e.target.value)} required type = "text" placeholder = "Enter product name" /> 
                 <input onChange={e => setProdDescription(e.target.value)} required type = "text" placeholder = "Enter product description"/> 
-                <input onChange={e => setProdPrice(e.target.value)} required type = "number" placeholder = "Enter product price"/>
-                <input onChange={e => setProdImageUrl(+e.target.value)} required type = "text" placeholder = "Enter product image url"/> 
+                <input onChange={e => setProdPrice(+e.target.value)} required type = "number" placeholder = "Enter product price"/>
+                <input onChange={e => setProdImageUrl(e.target.value)} required type = "text" placeholder = "Enter product image url"/> 
                 <button onClick={addProduct}>Add Product</button> 
             </form>
             {message && <div className="message">
