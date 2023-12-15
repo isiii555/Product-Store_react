@@ -21,7 +21,7 @@ export default function SubmitForm({setFlag, flag, setMessage}) {
             totalAmount += (myBagElement.product_price * myBagElement.product_quantity);
         }
         setTotal(totalAmount);
-    })
+    },[myBag])
 
     const submit = (e) => {
         e.preventDefault();

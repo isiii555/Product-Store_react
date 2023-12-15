@@ -10,8 +10,8 @@ export default function AdminProduct({product, setShowMessage,showMessage,setFla
     const dispatch = useDispatch();
 
     const editProduct = () => {
-
-    };
+        navigate(`edit-product/${product.id}`);
+    }
 
     const removeProduct = () => {
         dispatch(removeProductAdmin(product.id));

@@ -228,8 +228,11 @@ a {
 
 .submit-form {
     flex: 1;
-    background: #F7F6F6;
+    background: rgb(251, 237, 237);
+    height: 566px;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .products-header {
@@ -300,6 +303,7 @@ a {
 
 .submit-form form {
     display: flex;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -348,8 +352,6 @@ a {
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
-    margin: auto;
-    margin-bottom: 148px;
     width: 290px;
     background-color: transparent;
     border-radius: 20px;
@@ -469,6 +471,7 @@ table th, td {
 
 .empty-image-container {
     display: flex;
+    height: 100%;
     justify-content: center;
     align-items: center;
 }
@@ -594,4 +597,31 @@ table th, td {
     background-color: steelblue;
     color: white;
     cursor : pointer;
+}
+
+
+.admin-container .product-page img {
+    flex-grow: 0.5;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-container .product-page {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-container .product-page input {
+    font-size: 24px;
+    padding-left: 4px;
+    font-weight: 500;
+    line-height: 29px;
+    color: #050505;
+    border: 1px solid #888888;
+}
+
+.no-result-image {
+    height: 100px;
+    opacity: 0.7;
 }

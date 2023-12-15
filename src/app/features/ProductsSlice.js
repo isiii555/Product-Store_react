@@ -83,6 +83,7 @@ const ProductsSlice = createSlice(
                 .then(res => res.text())
                 .then(data => console.log(data));
             }
+            
         },
         initialState,
         extraReducers: (builder) => {
@@ -98,8 +99,6 @@ const ProductsSlice = createSlice(
                         }
                         return 0;
                     });
-                    console.log("kisi");
-                    console.log(prods);
                     state.products = [...prods];
                 }
                 else if (localStorage.getItem("man") < localStorage.getItem("woman")){
@@ -112,12 +111,9 @@ const ProductsSlice = createSlice(
                         }
                         return 0;
                     });
-                    console.log("qadin");
-                    console.log(prods);
                     state.products = [...prods];
                 }
                 else {
-                    console.log("hello");
                     state.products = [...action.payload];
                 }
             })

@@ -2,13 +2,16 @@ import Products from "../Components/Products";
 import SubmitForm from "../Components/SubmitForm";
 import {useEffect, useLayoutEffect, useState} from "react";
 import {fetchMyBag, sortBag, searchMyBag, fetchMyBagSearch} from "../app/features/ProductsSlice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {FaSort,FaSearch} from "react-icons/fa";
 
 export default function Basket() {
     const [flag, setFlag] = useState(false);
+    const {myBag} = useSelector(state => state.ProductsReducer);
+    const [filteredProducts,setFilteredProducts] = useState(myBag);
     const dispatch = useDispatch();
     const [message, setMessage] = useState(false);
+    const [search,setSearch] = useState("");
 
     useEffect(() => {
         if (message) {
@@ -17,22 +20,22 @@ export default function Basket() {
         }
     }, [message]);
 
+    useEffect(() => {
+        dispatch(fetchMyBag());
+        search ? setFilteredProducts(myBag.filter(prod => prod.product_name.toLocaleLowerCase(("AZ")).startsWith(search.toLocaleLowerCase("AZ")))) : setFilteredProducts(myBag);
+    },[search,flag]);
+
     useLayoutEffect(() => {
         dispatch(fetchMyBag());
-    }, [dispatch, flag])
+        setFilteredProducts(myBag);
+    }, [dispatch, flag]);
 
     function sortProductsCmp() {
         dispatch(sortBag());
     }
 
-    function searchBag(e) {
-        console.log(e.target.value);
-        e.target.value ? dispatch(fetchMyBagSearch(e.target.value)) : dispatch(fetchMyBag());
-    }
-
     return (
         <div className="basket-container">
-
             <div className="products-container">
                 <div className="products-header">
                     <p>Product</p>
@@ -41,12 +44,12 @@ export default function Basket() {
                         <FaSort/>
                     </button>
                     <div className="search-container">
-                        <input onChange={searchBag} placeholder='Search...' className='js-search' type="text"/>
+                        <input onChange={e => setSearch(e.target.value)} placeholder='Search...' className='js-search' type="text"/>
                         <FaSearch/>
                     </div>
                     <p>Count</p>
                 </div>
-                <Products/>
+                <Products filteredProducts = {filteredProducts} />
             </div>
             <SubmitForm setMessage={setMessage} setFlag={setFlag} flag={flag}/>
             {message &&

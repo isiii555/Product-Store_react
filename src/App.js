@@ -11,6 +11,7 @@ import ProductPage from "./pages/ProductPage";
 import Orders from "./pages/Orders";
 import AddProduct from './Components/AddProduct';
 import AdminProducts from './Components/AdminProducts';
+import EditAdminProduct from "./Components/EditAdminProduct";
 
 function App() {
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
                         <Route index = {true} element={<AdminProducts/>}/>
                         <Route path="orders" element={<Orders/>}/>
                         <Route path="add-product" element={<AddProduct/>}/>
+                        <Route path="edit-product/:id" element={<EditAdminProduct/>}/>
                     </Route>
                     <Route path="basket" element={<Basket/>}/>
                     <Route path="product/:id" element={<ProductPage/>}/>
