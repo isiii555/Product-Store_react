@@ -3,7 +3,7 @@ import { FaRegTrashAlt,FaRegEdit } from "react-icons/fa";
 import { removeProductAdmin } from "../app/features/ProductsSlice";
 import {useNavigate} from "react-router-dom";
 
-export default function AdminProduct({product, setShowMessage,showMessage,setFlag,flag}) {
+export default function AdminProduct({product, setShowMessage, setFlag,flag}) {
 
     const navigate = useNavigate();
 
@@ -16,6 +16,10 @@ export default function AdminProduct({product, setShowMessage,showMessage,setFla
     const removeProduct = () => {
         dispatch(removeProductAdmin(product.id));
         setFlag(!flag);
+        setShowMessage({
+            id : product.id,
+            name : product.product_name
+        })
     };
 
     return (

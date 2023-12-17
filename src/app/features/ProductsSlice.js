@@ -27,6 +27,7 @@ export const fetchMyBagSearch = createAsyncThunk(
 const initialState = {
     products: [],
     myBag : [],
+    filteredMyBag : [],
     sorted: false,
     bagSorted : false,
 }
@@ -60,10 +61,10 @@ const ProductsSlice = createSlice(
                 state.products = newProducts;
             },
             sortBag : (state) => {
-                let newProducts = [...state.myBag];
+                let newProducts = [...state.filteredMyBag];
                 state.bagSorted ? newProducts.sort((a, b) => a.product_price - b.product_price) : newProducts.sort((a, b) => b.product_price - a.product_price);
                 state.bagSorted = !state.bagSorted;
-                state.myBag = newProducts;
+                state.filteredMyBag = [...newProducts];
             },
             submitOrder: (state,action) => {
                 fetch(`http://localhost:5000/add-orders`, {
@@ -82,8 +83,11 @@ const ProductsSlice = createSlice(
                 })
                 .then(res => res.text())
                 .then(data => console.log(data));
+            },
+            setSearch : (state,action) => {
+                let search = action.payload;
+                state.filteredMyBag = state.myBag.filter(prod => prod.product_name.toLocaleLowerCase("AZ").startsWith(search.toLocaleLowerCase("AZ")));
             }
-            
         },
         initialState,
         extraReducers: (builder) => {
@@ -119,6 +123,7 @@ const ProductsSlice = createSlice(
             })
             builder.addCase(fetchMyBag.fulfilled,(state,action) => {
                 state.myBag = action.payload;
+                state.filteredMyBag = [...state.myBag];
             })
             builder.addCase(fetchMyBagSearch.fulfilled,(state,action) => {
                 state.myBag = action.payload;
@@ -127,5 +132,5 @@ const ProductsSlice = createSlice(
     }
 )
 
-export const {removeProductAdmin,searchMyBag,sortBag,submitOrder,sortProducts, addProductToBasket, deleteProductFromBasket} = ProductsSlice.actions
+export const {setSearch,removeProductAdmin,searchMyBag,sortBag,submitOrder,sortProducts, addProductToBasket, deleteProductFromBasket} = ProductsSlice.actions
 export default ProductsSlice.reducer;

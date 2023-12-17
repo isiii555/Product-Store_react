@@ -6,15 +6,11 @@ import {useDispatch} from "react-redux";
 export default function ProductBasket({product, setFlag, flag}) {
 
     const dispatch = useDispatch();
-
     const addProduct = () => {
-        console.log(product);
         dispatch(addProductToBasket(product))
         setFlag(!flag);
     }
-
     const reduceProduct = () => {
-        console.log(product);
         fetch(`http://localhost:5000/delete-mybag-quantity/${product.id}`, {
             method: "DELETE"
         });

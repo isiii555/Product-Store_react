@@ -21,6 +21,15 @@ export default function AdminProducts() {
         dispatch(fetchProducts());
     },[dispatch,flag])
 
+    useEffect(() => {
+        if (showMessage) {
+            const time = setTimeout( () => {
+                setShowMessage(false);
+            },2000)
+            return (() => clearTimeout(time))
+        }
+    }, [showMessage])
+
     return (
         <>
         <div className="content-container">
@@ -30,11 +39,13 @@ export default function AdminProducts() {
             </button>
             <div className="content">
                 {products.map((product,index) => {
-                    return <AdminProduct flag = {flag} setFlag = {setFlag} key = {index} product={product}/>
+                    return <AdminProduct setShowMessage={setShowMessage} flag = {flag} setFlag = {setFlag} key = {index} product={product}/>
                 })}
             </div>
+            {showMessage && <div className="message2 basketmsg">
+                {showMessage.name} was removed!
+            </div>}
         </div>
-
         </>
     )
 }

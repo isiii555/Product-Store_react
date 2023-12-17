@@ -16,13 +16,13 @@ export default function EditAdminProduct() {
 
     const [price,setPrice] = useState(false);
 
+    const product = products.find(prod => prod.id === +id);
+
     useEffect(() => {
-        if (!price) {
+        if (!price && product) {
             setPrice(product.product_price);
         }
-    },[price])
-
-    const product = products.find(prod => prod.id === +id);
+    },[price,product])
 
     const editProduct = () => {
         fetch(`http://localhost:5000/change-admin/${id}`,{

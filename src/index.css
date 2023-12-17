@@ -45,7 +45,7 @@ code {
 }
 
 .content {
-    margin-top: 105px;
+    margin-top: 32px;
     width: 100%;
     display: grid;
     grid-template-columns: auto auto auto;
@@ -156,9 +156,6 @@ a {
 }
 
 .sort-button {
-    position: absolute;
-    top: 0;
-    right: 0;
     background-color: white;
     width: fit-content;
     box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -167,7 +164,6 @@ a {
     padding: 6px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    margin-top: 32px;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -307,16 +303,20 @@ a {
     flex-direction: column;
 }
 
+.submit-form form input:focus {
+    border-bottom: 2px solid red;
+}
+
 .submit-form form input, .submit-form form input::placeholder {
+    transition: 2s all;
     font-family: 'Montserrat';
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
     letter-spacing: 0px;
     background-color: transparent;
-    border-bottom: 1px solid #CACDD8;
+    border-bottom: 2px solid #CACDD8;
     width: 288px;
-    margin-left: 27px;
     margin-bottom: 41px;
     color: #050505;
 }
@@ -530,6 +530,7 @@ table th, td {
 }
 .admin-container .content-container .sort-button{
     right: 10px;
+    margin-top: 32px;
 }
 
 .admin-container .admin-navbar{
@@ -608,8 +609,14 @@ table th, td {
 
 .admin-container .product-page {
     width: 100%;
+    gap: 30px;
     align-items: center;
     justify-content: center;
+}
+
+.admin-container .product-page .product-price {
+    display: flex;
+    gap: 8px;
 }
 
 .admin-container .product-page input {
@@ -624,4 +631,18 @@ table th, td {
 .no-result-image {
     height: 100px;
     opacity: 0.7;
+}
+
+.basketmsg {
+    background-color: red;
+    color: white;
+    font-size: 18px;
+}
+
+.content-container .content-header {
+    margin-top: 20px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    gap : 10px;
 }

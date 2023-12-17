@@ -12,11 +12,22 @@ export default function SubmitForm({setFlag, flag, setMessage}) {
     const [name, setName] = useState("");
     const [number, setNumber] = useState("");
     const [adress, setAdress] = useState("");
+    const [numberTrue,setNumberTrue] = useState(false);
 
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        let totalAmount = 0
+        const phoneNumberRegex = /^(?:\+994|994|0)(50|51|55|60|70|77|99)[1-9]\d{6}$/;
+        if (phoneNumberRegex.test(number.replace(/\s/g, ''))) {
+            console.log(true);
+            setNumberTrue(true);
+        }
+        else
+            setNumberTrue(false);
+    },[number])
+
+    useEffect(() => {
+        let totalAmount = 0;
         for (const myBagElement of myBag) {
             totalAmount += (myBagElement.product_price * myBagElement.product_quantity);
         }
@@ -39,18 +50,22 @@ export default function SubmitForm({setFlag, flag, setMessage}) {
             .then(data => console.log(data))
             .then(() => setMessage(name))
             .then(() => formRef.current.reset())
-            .then(() => setFlag(!flag));
+            .then(() => {
+                setNumberTrue(false);
+                setName("");
+                setAdress("");
+                setFlag(!flag)});
     }
 
     return (
         <div className="submit-form">
             <form ref={formRef}>
                 <label className="form-header">Placing an order</label>
-                <input onChange={e => setName(e.target.value)} type="text" placeholder="Name Surname"/>
-                <input onChange={e => setNumber(e.target.value)} type="text" placeholder="+994 70 726 00 43"/>
-                <input onChange={e => setAdress(e.target.value)} type="text" placeholder="Adress"/>
+                <input style={name ? {borderBottom : "2px solid green"} : {borderBottom : ""}} onChange={e => setName(e.target.value)} type="text" placeholder="Name Surname"/>
+                <input style={numberTrue ? {borderBottom : "2px solid green"} : {borderBottom : ""}} onChange={e => setNumber(e.target.value)} title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" type="text" pattern="^(?:\+994|994|0)(50|51|55|60|70|77|99)[1-9]\d{6}$" placeholder="+994 70 726 00 43"/>
+                <input style={adress ? {borderBottom : "2px solid green"} : {borderBottom : ""}} onChange={e => setAdress(e.target.value)} type="text" placeholder="Adress"/>
                 <label className="total">Total : <span>{total} AZN</span></label>
-                <button disabled={!(name && adress && number && myBag.length)} onClick={submit}>Place an order</button>
+                <button disabled={!(name && adress && numberTrue && myBag.length)} onClick={submit}>Place an order</button>
             </form>
         </div>
     )

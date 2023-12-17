@@ -1,35 +1,35 @@
 import {useDispatch, useSelector} from "react-redux";
-import emtpyLogo from "../Assets/Images/basket-removebg-preview.png";
+import emptyLogo from "../Assets/Images/basket-removebg-preview.png";
 import noResultLogo from "../Assets/Images/6134065-removebg-preview.png"
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import ProductBasket from "../Components/ProductBasket";
 import {fetchMyBag} from "../app/features/ProductsSlice";
 
-export default function Products({filteredProducts}) {
+export default function Products() {
 
     const dispatch = useDispatch();
 
+    const {myBag,filteredMyBag} = useSelector((state) => state.ProductsReducer);
+
     const [flag,setFlag] = useState(false);
 
-    const { myBag } = useSelector((state) => state.ProductsReducer);
-
-    useLayoutEffect(() => {
-        dispatch(fetchMyBag())
-    },[dispatch,flag])
+    useEffect(() => {
+        dispatch(fetchMyBag());
+    }, [dispatch,flag]);
 
     if (myBag.length === 0) {
         return <div className = "empty-image-container">
-            <img className="empty-image" src={emtpyLogo} alt ="empty" />
+            <img className="empty-image" src={emptyLogo} alt ="empty" />
         </div>
     }
-    else if (filteredProducts.length === 0) {
+    else if (filteredMyBag.length === 0) {
         return <div className = "empty-image-container">
             <img className="no-result-image" src={noResultLogo} alt ="noresult" />
         </div>
     }
     return (
         <div>
-            {filteredProducts.map((product, index) => {
+            {filteredMyBag.map((product, index) => {
                 return <ProductBasket key={index} setFlag={setFlag} flag={flag} product={product}/>
             })}
         </div>
