@@ -7,7 +7,7 @@ export default function Orders() {
     const [orderIndex, setOrderIndex] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:5000/orders")
+        fetch("https://product-store-server-weld.vercel.app/orders")
             .then((res) => res.json())
             .then((data) => setOrders(data));
     }, []);
