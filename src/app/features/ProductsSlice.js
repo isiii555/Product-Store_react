@@ -3,7 +3,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 export const fetchProducts = createAsyncThunk(
     "fetchProducts",
     async () => {
-        let res = fetch("http://localhost:5000/goods");
+        let res = fetch("https://product-store-server-weld.vercel.app/goods");
         return (await res).json();
     }
 )
@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk(
 export const fetchMyBag = createAsyncThunk(
     "fetchMyBag",
     async () => {
-        let res = fetch("http://localhost:5000/my-bag");
+        let res = fetch("https://product-store-server-weld.vercel.app/my-bag");
         return (await res).json();
     }
 )
@@ -19,7 +19,7 @@ export const fetchMyBag = createAsyncThunk(
 export const fetchMyBagSearch = createAsyncThunk(
     "fetchMyBagSearch",
     async (value) => {
-        let res = fetch(`http://localhost:5000/search-goods/${value}`);
+        let res = fetch(`https://product-store-server-weld.vercel.app/search-goods/${value}`);
         return (await res).json();
     }
 )
@@ -37,7 +37,7 @@ const ProductsSlice = createSlice(
         name: "ProductsSlice",
         reducers: {
             addProductToBasket: (state, action) => {
-                fetch("http://localhost:5000/add-mybag", {
+                fetch("https://product-store-server-weld.vercel.app/add-mybag", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json"
@@ -48,7 +48,7 @@ const ProductsSlice = createSlice(
                     .then(data => console.log(data));
             },
             deleteProductFromBasket: (state, action) => {
-                fetch(`http://localhost:5000/delete-mybag/${action.payload.id}`, {
+                fetch(`https://product-store-server-weld.vercel.app/delete-mybag/${action.payload.id}`, {
                     method: "DELETE",
                 })
                     .then(res => res.text())
@@ -67,7 +67,7 @@ const ProductsSlice = createSlice(
                 state.filteredMyBag = [...newProducts];
             },
             submitOrder: (state,action) => {
-                fetch(`http://localhost:5000/add-orders`, {
+                fetch(`https://product-store-server-weld.vercel.app/add-orders`, {
                     method: "POST",
                     headers : {
                         "Content-type" : "application/json"
@@ -78,7 +78,7 @@ const ProductsSlice = createSlice(
                     .then(data => console.log(data));
             },
             removeProductAdmin : (state,action) => {
-                fetch(`http://localhost:5000/delete-admin/${action.payload}`,{
+                fetch(`https://product-store-server-weld.vercel.app/delete-admin/${action.payload}`,{
                     method: "DELETE"
                 })
                 .then(res => res.text())
@@ -122,7 +122,7 @@ const ProductsSlice = createSlice(
                 }
             })
             builder.addCase(fetchMyBag.fulfilled,(state,action) => {
-                state.myBag = action.payload;
+                state.myBag = action.payload;https://product-store-server-weld.vercel.app/
                 state.filteredMyBag = [...state.myBag];
             })
             builder.addCase(fetchMyBagSearch.fulfilled,(state,action) => {
