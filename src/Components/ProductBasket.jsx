@@ -11,7 +11,7 @@ export default function ProductBasket({product, setFlag, flag}) {
         setFlag(!flag);
     }
     const reduceProduct = () => {
-        fetch(`http://localhost:5000/delete-mybag-quantity/${product.id}`, {
+        fetch(`https://product-store-server-weld.vercel.app/delete-mybag-quantity/${product.id}`, {
             method: "DELETE"
         });
         setFlag(!flag);
