@@ -25,7 +25,7 @@ export default function EditAdminProduct() {
     },[price,product])
 
     const editProduct = () => {
-        fetch(`http://localhost:5000/change-admin/${id}`,{
+        fetch(`https://product-store-server-weld.vercel.app/change-admin/${id}`,{
             method : "PUT",
             headers : {
                 "Content-Type" : "application/json"
