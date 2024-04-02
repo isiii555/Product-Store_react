@@ -1,46 +1,41 @@
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom";
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export default function EditAdminProduct() {
-
-    const {id} = useParams();
-
+    const { id } = useParams();
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
-
-    const {products} = useSelector(state => state.ProductsReducer);
-
+    const { products } = useSelector(state => state.ProductsReducer);
     const priceRef = useRef();
-
-    const [price,setPrice] = useState(false);
-
+    const [price, setPrice] = useState(false);
     const product = products.find(prod => prod.id === +id);
 
     useEffect(() => {
         if (!price && product) {
             setPrice(product.product_price);
         }
-    },[price,product])
+    }, [price, product]);
 
     const editProduct = () => {
-        fetch(`https://product-store-server-weld.vercel.app/change-admin/${id}`,{
-            method : "PUT",
-            headers : {
-                "Content-Type" : "application/json"
+        fetch(`${apiUrl}/change-admin/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
             },
-            body : JSON.stringify({...product,product_price : price}),
+            body: JSON.stringify({ ...product, product_price: price })
         })
-        .then(res => res.text())  
-        .then(data => console.log(data));
+            .then(res => res.text())
+            .then(data => console.log(data));
         navigate("/admin");
     }
 
-    return(
+    return (
         <>
             {product && <div className="product-page">
-                <img className="product-page-image" alt="productimage" src={product.product_img}/>
+                <img className="product-page-image" alt="productimage" src={product.product_img} />
                 <div className="product-page-info">
                     <div className="product-name">
                         {product.product_name}
@@ -49,10 +44,10 @@ export default function EditAdminProduct() {
                         {product.product_description}
                     </div>
                     <div className="product-price">
-                       <input ref={priceRef} type="number" onChange={(e) => {
-                        setPrice(e.target.value ? e.target.value : false);
-                        console.log(price);
-                        }} defaultValue={product.product_price} placeholder="Enter new price"/> AZN
+                        <input ref={priceRef} type="number" onChange={(e) => {
+                            setPrice(e.target.value ? e.target.value : false);
+                            console.log(price);
+                        }} defaultValue={product.product_price} placeholder="Enter new price" /> AZN
                     </div>
                     <div className="add-to-cart" onClick={editProduct}>
                         Edit Product

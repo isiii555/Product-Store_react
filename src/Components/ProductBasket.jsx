@@ -1,21 +1,25 @@
-import {IoMdArrowDropup} from "react-icons/io";
-import {IoMdArrowDropdown} from "react-icons/io";
-import {addProductToBasket, deleteProductFromBasket} from "../app/features/ProductsSlice";
-import {useDispatch} from "react-redux";
+import { IoMdArrowDropup } from "react-icons/io";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { addProductToBasket, deleteProductFromBasket } from "../app/features/ProductsSlice";
+import { useDispatch } from "react-redux";
 
-export default function ProductBasket({product, setFlag, flag}) {
+const apiUrl = process.env.REACT_APP_API_URL;
 
+export default function ProductBasket({ product, setFlag, flag }) {
     const dispatch = useDispatch();
+
     const addProduct = () => {
-        dispatch(addProductToBasket(product))
+        dispatch(addProductToBasket(product));
         setFlag(!flag);
     }
+
     const reduceProduct = () => {
-        fetch(`https://product-store-server-weld.vercel.app/delete-mybag-quantity/${product.id}`, {
+        fetch(`${apiUrl}/delete-mybag-quantity/${product.id}`, {
             method: "DELETE"
         });
         setFlag(!flag);
     }
+
     const removeFromBag = () => {
         dispatch(deleteProductFromBasket(product));
         setFlag(!flag);
@@ -24,7 +28,7 @@ export default function ProductBasket({product, setFlag, flag}) {
     return (
         <div className="product-basket">
             <div className="container">
-                <img src={product.product_img} className="product-image"/>
+                <img src={product.product_img} className="product-image" />
                 <div className="product-info">
                     <div className="product-name">{product.product_name}</div>
                     <div className="product-description">{product.product_description}</div>
@@ -36,10 +40,10 @@ export default function ProductBasket({product, setFlag, flag}) {
                 {product.product_quantity}
                 <div className="arrows">
                     <div onClick={addProduct}>
-                        <IoMdArrowDropup/>
+                        <IoMdArrowDropup />
                     </div>
                     <div onClick={reduceProduct}>
-                        <IoMdArrowDropdown/>
+                        <IoMdArrowDropdown />
                     </div>
                 </div>
             </div>
