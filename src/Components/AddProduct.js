@@ -21,7 +21,7 @@ export default function AddProduct() {
             product_img : `${prodImageUrl}`,
             product_price : prodPrice
         }
-        fetch("http://localhost:5000/add-admin",{
+        fetch("https://product-store-server-weld.vercel.app/add-admin",{
             method : "POST",
             headers : {
                 'Content-type' : "application/json"
