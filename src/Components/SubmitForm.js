@@ -43,7 +43,7 @@ export default function SubmitForm({setFlag, flag, setMessage}) {
             orders : [...myBag]
         }
         dispatch(submitOrder(newOrder));
-        fetch("http://localhost:5000/clear-mybag", {
+        fetch("https://product-store-server-weld.vercel.app/clear-mybag", {
             method: "DELETE"
         })
             .then(res => res.text())
